@@ -23,11 +23,26 @@ if (!defined('ABSPATH')) {
 
 //Defining the constants
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
+define("PLUGINS_PATH_ASSETS", plugin_dir_url(__FILE__) . 'assets/');
 
 
 //cmb2 path required
 require_once PLUGIN_DIR_PATH . 'inc/cmb2/init.php';
 require_once PLUGIN_DIR_PATH . 'inc/cmb2/functions.php';
+
+
+add_action('wp_enqueue_scripts', 'buyer_plans_enqueue_files');
+
+function buyer_plans_enqueue_files()
+{
+
+    wp_enqueue_style('style', PLUGINS_PATH_ASSETS . 'css/style.css');
+
+    wp_enqueue_script('jqueryscript', PLUGINS_PATH_ASSETS . 'js/jquery.min.js', array('jquery'));
+    wp_enqueue_script('script', PLUGINS_PATH_ASSETS . 'js/script.js');
+}
+
+
 
 function buyer_plans()
 {
@@ -134,31 +149,30 @@ register_activation_hook(__FILE__, 'jal_install_data');
 
 
 
+// // if (is_user_logged_in()) {
+// //     $user = wp_get_current_user();
+// //     $roles = (array) $user->roles;
+// //     $role = ($roles[0]);
+// //     // print_r($role);
+// // }
 
-
-
-// /*
-//  * Step 1. Add Link (Tab) to My Account menu
-//  */
-// add_filter('woocommerce_account_menu_items', 'woo493_add_links_account_page', 40);
-// function woo493_add_links_account_page($menu_links)
-// {
-
-//     $menu_links = array_slice($menu_links, 0, 3, true)
-//         + array('new-bookmarks' => 'bookmark')
-//         + array_slice($menu_links, 3, NULL, true);
-
-//     return $menu_links;
+// if ($role == 'houzez_buyer') {
+// 
+?>
+<!-- //     <style>
+//         .menu-item-2650 {
+//             display: none;
+//         }
+//     </style> -->
+<?php
 // }
-
-
-// /*
-//  * Step 2. Register Permalink Endpoint
-//  */
-// add_action('init', 'woo493_endpoints');
-// function woo493_endpoints()
-// {
-
-//     // WP_Rewrite is my Achilles' heel, so please do not ask me for detailed explanation
-//     add_rewrite_endpoint('new-bookmarks', EP_PAGES);
+// if ($role == 'houzez_seller') {
+// 
+?>
+<!-- //     <style>
+//         .menu-item-2795 {
+//             display: none;
+//         }
+//     </style> -->
+<?php
 // }
